@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Right Factor Engineering and Solutions Co., Ltd</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* Logo အရောင်များကို အခြေခံထားသော Vibrant Palette */
+            --primary: #0046ad; /* တောက်ပသော အပြာရင့် */
+            --secondary: #00ccff; /* တောက်ပသော အပြာနု (Electric Cyan) */
+            --accent: #ff0055; /* Pop ဖြစ်စေရန် Accent အရောင် အနည်းငယ် */
+            --dark: #020617;
+            --light: #f1f5f9;
+            --white: #ffffff;
+            --glass: rgba(255, 255, 255, 0.96);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--white); color: var(--dark); overflow-x: hidden; }
+
+        /* --- Navigation --- */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 8%; position: fixed; width: 100%; top: 0; z-index: 2000;
+            background: var(--glass); backdrop-filter: blur(12px);
+            border-bottom: 2px solid var(--secondary);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        .nav-logo { height: 55px; width: auto; transition: 0.3s; }
+        .nav-logo:hover { transform: scale(1.05); }
+
+        .nav-links { display: flex; list-style: none; gap: 30px; }
+        .nav-links a { 
+            text-decoration: none; 
+            color: var(--primary); 
+            font-weight: 700; 
+            font-size: 0.95rem; 
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+        .nav-links a:hover { color: var(--secondary); }
+
+        /* --- Hero Slideshow --- */
+        #home { position: relative; height: 100vh; width: 100%; overflow: hidden; }
+        .slideshow-container { height: 100%; width: 100%; position: relative; }
+        .mySlides { display: none; height: 100%; position: relative; }
+        .mySlides img { width: 100%; height: 100%; object-fit: cover; }
+        .slide-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(0, 70, 173, 0.8), rgba(0, 204, 255, 0.4));
+            display: flex; align-items: center; justify-content: center; text-align: center; color: white; padding: 0 20px;
+        }
+        .hero-content h1 { 
+            font-size: clamp(2.5rem, 7vw, 5rem); font-weight: 800; line-height: 1.1; 
+            margin-bottom: 25px; text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+        }
+        .hero-content p { font-size: 1.3rem; max-width: 850px; margin: 0 auto 35px; opacity: 0.95; font-weight: 400; }
+        
+        .fade { animation: fadeEffect 1.5s ease-in-out; }
+        @keyframes fadeEffect { from {opacity: 0.6} to {opacity: 1} }
+
+        /* --- Buttons --- */
+        .btn-primary { 
+            background: var(--secondary); color: var(--primary); padding: 18px 45px; 
+            border-radius: 50px; text-decoration: none; font-weight: 800; 
+            transition: 0.3s; display: inline-block;
+            box-shadow: 0 5px 15px rgba(0, 204, 255, 0.4);
+        }
+        .btn-primary:hover { 
+            background: var(--white); transform: translateY(-3px); 
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.5);
+        }
+
+        /* --- Sections --- */
+        section { padding: 100px 8%; }
+        .section-tag { color: var(--secondary); font-weight: 800; text-transform: uppercase; letter-spacing: 3px; display: block; text-align: center; margin-bottom: 12px; }
+        .section-title { font-size: 3rem; text-align: center; margin-bottom: 50px; color: var(--primary); font-weight: 800; }
+
+        /* --- About Us --- */
+        #about { background-color: var(--light); }
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .about-text h3 { font-size: 2rem; color: var(--primary); margin-bottom: 25px; font-weight: 700; }
+        .about-text p { margin-bottom: 20px; color: #334155; line-height: 1.8; font-size: 1.1rem; }
+
+        /* --- Services --- */
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .service-card { 
+            padding: 50px; border-radius: 30px; background: var(--white); 
+            transition: 0.4s; border: 1px solid rgba(0, 70, 173, 0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+        }
+        .service-card:hover { 
+            transform: translateY(-12px); 
+            background: var(--primary); color: var(--white);
+            box-shadow: 0 30px 60px rgba(0, 70, 173, 0.2);
+        }
+        .service-card i { font-size: 3.5rem; color: var(--secondary); margin-bottom: 25px; display: block; }
+        .service-card:hover i { color: var(--white); }
+        .service-card h3 { font-size: 1.6rem; margin-bottom: 15px; }
+
+        /* --- Gallery --- */
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
+        .gallery-item { position: relative; border-radius: 25px; overflow: hidden; height: 350px; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s; }
+        .gallery-overlay { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0, 70, 173, 0.85); display: flex; flex-direction: column; 
+            justify-content: center; align-items: center; text-align: center;
+            opacity: 0; transition: 0.4s; color: white; padding: 25px;
+        }
+        .gallery-item:hover .gallery-overlay { opacity: 1; }
+        .gallery-item:hover img { transform: scale(1.1); }
+
+        /* --- Partners Marquee --- */
+        #partners { background-color: var(--light); padding: 80px 0; }
+        .marquee-container { width: 100%; overflow: hidden; padding: 40px 0; display: flex; }
+        .marquee-content { display: flex; gap: 80px; animation: marquee 25s linear infinite; align-items: center; }
+        .partner-logo-box { 
+            flex-shrink: 0; padding: 30px 50px; background: var(--white); 
+            border-radius: 20px; font-weight: 800; color: var(--primary); 
+            font-size: 1.6rem; border: 2px solid transparent; 
+            transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .partner-logo-box:hover { border-color: var(--secondary); transform: scale(1.1); color: var(--secondary); }
+        
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* --- Contact --- */
+        #contact { background-color: var(--dark); color: white; border-radius: 60px 60px 0 0; }
+        .contact-container { display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; }
+        .contact-form { background: rgba(255,255,255,0.03); padding: 40px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.1); }
+        .contact-form input, .contact-form textarea {
+            width: 100%; padding: 20px; margin-bottom: 20px; background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; color: white; outline: none; font-size: 1rem;
+        }
+        .contact-form input:focus { border-color: var(--secondary); }
+        .send-btn { 
+            background: var(--secondary); color: var(--primary); border: none; 
+            padding: 20px; border-radius: 15px; font-weight: 800; cursor: pointer; 
+            width: 100%; transition: 0.3s; font-size: 1.1rem;
+        }
+        .send-btn:hover { background: var(--white); transform: scale(1.02); }
+
+        footer { text-align: center; padding: 60px 8%; background: var(--dark); color: #94a3b8; border-top: 1px solid rgba(255,255,255,0.05); }
+
+        @media (max-width: 992px) { .about-grid, .contact-container { grid-template-columns: 1fr; } .nav-links { display: none; } }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <!-- Logo ပုံ အစားထိုးခြင်း -->
+        <a href="#home">
+            <img src="./images/logo.png" alt="Right Factor Logo" class="nav-logo">
+        </a>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#partners">Partners</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Slide Show Section -->
+    <section id="home" style="padding: 0;">
+        <div class="slideshow-container">
+            <div class="mySlides fade">
+                <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc51?auto=format&fit=crop&q=80" alt="Hardware">
+                <div class="slide-overlay">
+                    <div class="hero-content">
+                        <span class="section-tag" style="color:white">Since 2017</span>
+                        <h1>Engineering <br>Excellence</h1>
+                        <p>Myanmar's leading specialist in Data Center facilities and mission-critical power systems.</p>
+                        <a href="#services" class="btn-primary">View Our Solutions</a>
+                    </div>
+                </div>
+            </div>
+            <div class="mySlides fade">
+                <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80" alt="Tech">
+                <div class="slide-overlay">
+                    <div class="hero-content">
+                        <span class="section-tag" style="color:white">Reliability</span>
+                        <h1>Uninterrupted <br>Power Protection</h1>
+                        <p>Technically viable UPS and infrastructure solutions tailored for project quality and cost objectives.</p>
+                        <a href="#contact" class="btn-primary">Get Expert Advice</a>
+                    </div>
+                </div>
+            </div>
+            <div class="mySlides fade">
+                <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&q=80" alt="Network">
+                <div class="slide-overlay">
+                    <div class="hero-content">
+                        <span class="section-tag" style="color:white">Innovation</span>
+                        <h1>Smart Security & <br>Remote Monitoring</h1>
+                        <p>Building scalable strategy and applications with high speed, quality, and performance.</p>
+                        <a href="#projects" class="btn-primary">Our References</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <span class="section-tag">About US</span>
+        <h2 class="section-title">Professional Profile</h2>
+        <div class="about-grid">
+            <div class="about-text">
+                <h3>Right Factor Engineering and Solutions</h3>
+                <p>We provide design, installation, and commissioning throughout Myanmar, servicing projects from single unit installations to major refurbishments.</p>
+                <p>Our team consists of technical experts, finance and logistics specialists in the field of power, infrastructure, security and telecommunication solutions.</p>
+            </div>
+            <div class="about-text">
+                <h3>Our Mission</h3>
+                <p>To bring regional customers the best in innovation and competitive electrical power supply backup technologies through sheer ingenuity.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="services">
+        <span class="section-tag">Expertise</span>
+        <h2 class="section-title">Specialized Solutions</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <i class="fas fa-server"></i>
+                <h3>Data Centers</h3>
+                <p>Optimized infrastructure design for retail, leisure, and commercial industries.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-charging-station"></i>
+                <h3>Power Backup</h3>
+                <p>Advanced UPS protection, industrial batteries, and stationary power solutions.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-tower-broadcast"></i>
+                <h3>Telecom & Solar</h3>
+                <p>Professional deployment of network management and renewable energy systems.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <span class="section-tag">Case Studies</span>
+        <h2 class="section-title">Project References</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="./images/rf-3.png?auto=format&fit=crop&q=80" alt="MPT">
+                <div class="gallery-overlay"><h4>Cyber Security Center</h4><p>UPS System for at Security Gate</p></div>
+            </div>
+            <div class="gallery-item">
+                <img src="./images/rf-2.png?auto=format&fit=crop&q=80" alt="eGov">
+                <div class="gallery-overlay"><h4>UPS System</h4><p> at a Hospital</p></div>
+            </div>
+	    <div class="gallery-item">
+                <img src="./images/rf-4.png?auto=format&fit=crop&q=80" alt="eGov">
+                <div class="gallery-overlay"><h4>e-Gov Datacenter</h4><p>UPS System for a Server Rack</p></div>
+            </div>
+            <div class="gallery-item">
+                <img src="./images/rf-1.png?auto=format&fit=crop&q=80" alt="Hospital">
+                <div class="gallery-overlay"><h4>Medical Center</h4><p>Presison Air Conditioning at a Hosopital</p></div>
+            </div>
+	    <div class="gallery-item">
+                <img src="./images/rf-5.png?auto=format&fit=crop&q=80" alt="Hospital">
+                <div class="gallery-overlay"><h4>Medical Center</h4><p>UPS System at a Medical Center</p></div>
+            </div>
+	    <div class="gallery-item">
+                <img src="./images/rf-6.png?auto=format&fit=crop&q=80" alt="Hospital">
+                <div class="gallery-overlay"><h4>Medical Center</h4><p>Electrical Work at a Factory</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Animation Slide (Marquee) -->
+    <section id="partners">
+        <span class="section-tag">Global Brands</span>
+        <h2 class="section-title">Our Business Partners</h2>
+        <div class="marquee-container">
+            <div class="marquee-content">
+                <!-- အမည်များကို Partner Logo များဖြင့် အစားထိုးနိုင်သည် -->
+                <div class="partner-logo-box"><img src="./images/G-Tec.png" width: 100%; height: 70 alt="G-Tec Logo"></div>
+                <div class="partner-logo-box"><img src="./images/Growatt.png" width: 100%; height: 70 alt="KSTAR"></div>
+                <div class="partner-logo-box"><img src="./images/HANSINCO.png" width: 100%; height: 70 alt="HANSINCO"></div>
+                <div class="partner-logo-box"><img src="./images/HWGroup.png" width: 100%; height: 70 alt="HWGroup"></div>
+                <div class="partner-logo-box"><img src="./images/JinKo.png" width: 100%; height: 70 alt="JINKO SOLAR"></div>
+                <div class="partner-logo-box"><img src="./images/LEES.png" width: 100%; height: 70 alt="LEES"></div>
+                <div class="partner-logo-box"><img src="./images/Leoch.png" width: 100%; height: 70 alt="LEOCH"></div>
+                <div class="partner-logo-box"><img src="./images/Multi-Denco.png" width: 100%; height: 70 alt="Multi Denco"></div>
+                <div class="partner-logo-box"><img src="./images/NEOPOWER.png" width: 100%; height: 70 alt="NEOPOWER"></div>
+		<div class="partner-logo-box"><img src="./images/Prostar.png" width: 100%; height: 70 alt="Prostar"></div>
+                <div class="partner-logo-box"><img src="./images/Xtralis.png" width: 100%; height: 70 alt="XTRALIS"></div>
+                <!-- Duplicate for seamless scroll -->
+                <div class="partner-logo-box"><img src="./images/G-Tec.png" width: 100%; height: 70 alt="G-Tec Logo"></div>
+                <div class="partner-logo-box"><img src="./images/Growatt.png" width: 100%; height: 70 alt="KSTAR"></div>
+                <div class="partner-logo-box"><img src="./images/HANSINCO.png" width: 100%; height: 70 alt="HANSINCO"></div>
+                <div class="partner-logo-box"><img src="./images/HWGroup.png" width: 100%; height: 70 alt="HWGroup"></div>
+                <div class="partner-logo-box"><img src="./images/JinKo.png" width: 100%; height: 70 alt="JINKO SOLAR"></div>
+                <div class="partner-logo-box"><img src="./images/LEES.png" width: 100%; height: 70 alt="LEES"></div>
+                <div class="partner-logo-box"><img src="./images/Leoch.png" width: 100%; height: 70 alt="LEOCH"></div>
+                <div class="partner-logo-box"><img src="./images/Multi-Denco.png" width: 100%; height: 70 alt="Multi Denco"></div>
+                <div class="partner-logo-box"><img src="./images/NEOPOWER.png" width: 100%; height: 70 alt="NEOPOWER"></div>
+		<div class="partner-logo-box"><img src="./images/Prostar.png" width: 100%; height: 70 alt="Prostar"></div>
+                <div class="partner-logo-box"><img src="./images/Xtralis.png" width: 100%; height: 70 alt="XTRALIS"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="contact-container">
+            <div>
+                <span class="section-tag" style="text-align: left; color: var(--secondary);">Connect</span>
+                <h2 style="font-size: 2.8rem; margin: 20px 0; font-weight: 800;">Let's Secure Your <br>Infrastructures</h2>
+                <div style="margin-bottom: 30px;">
+                    <p style="color: #cbd5e1; margin-bottom: 20px; font-size: 1.1rem;">ကျွန်ုပ်တို့၏ အင်ဂျင်နီယာအဖွဲ့သည် ၂၄/၇ ဝန်ဆောင်မှုပေးရန် အဆင်သင့်ရှိပါသည်။</p>
+                    <p><i class="fas fa-map-marker-alt" style="color: var(--secondary); margin-right: 15px;"></i> North Dagon, Yangon, Myanmar.</p>
+                    <p style="margin: 15px 0;"><i class="fas fa-phone-alt" style="color: var(--secondary); margin-right: 15px;"></i> +95 9451188190, 88290, 88390</p>
+                    <p><i class="fas fa-envelope" style="color: var(--secondary); margin-right: 15px;"></i> info.rightfactor@gmail.com</p>
+                </div>
+            </div>
+            <div class="contact-form">
+                <form id="contactForm">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <textarea placeholder="Tell us about your project..." rows="6" required></textarea>
+                    <button type="submit" class="send-btn">SEND INQUIRY</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        
+	<p>Copyright © 2026, <span style="color: #ff0000;">Right Factor Engineering and Solutions Co., Ltd. <br> </span> All Rights Reserved. Web Developer by <a href="https://www.mmitsg.com/" target="_blank" rel="noopener">MMITSG</a></p>	
+        
+    </footer>
+
+    <script>
+        // Hero Slideshow Logic
+        let slideIndex = 0;
+        showSlides();
+        function showSlides() {
+            let i;
+            let slides = document.getElementsByClassName("mySlides");
+            for (i = 0; i < slides.length; i++) { slides[i].style.display = "none"; }
+            slideIndex++;
+            if (slideIndex > slides.length) {slideIndex = 1}    
+            slides[slideIndex-1].style.display = "block";  
+            setTimeout(showSlides, 5000); 
+        }
+
+        // Form Submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('ကျေးဇူးတင်ပါသည်။ သင်၏ မေးမြန်းမှုကို လက်ခံရရှိပါပြီ။ မကြာမီ ပြန်လည်ဆက်သွယ်ပေးပါမည်။');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
